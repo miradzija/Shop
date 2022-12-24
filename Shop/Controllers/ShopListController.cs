@@ -79,6 +79,39 @@ namespace Shop.Controllers
             return View(obj);
         }
 
+        //GET
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var shopListFromDb = _db.shopLists.Find(id);
+
+            if (shopListFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(shopListFromDb);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _db.shopLists.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.shopLists.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
     }
+
 }
+
