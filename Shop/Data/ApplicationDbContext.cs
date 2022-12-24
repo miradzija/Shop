@@ -1,6 +1,15 @@
-﻿namespace Shop.Data
+﻿using Microsoft.EntityFrameworkCore;
+using Shop.Models;
+
+namespace Shop.Data
 {
-    public class ApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<ShopList> shopLists { get; set; }
     }
 }
