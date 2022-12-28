@@ -4,11 +4,11 @@ using Shop.Models;
 
 namespace Shop.Controllers
 {
-    public class ShopListController : Controller
+    public class DashBoardController : Controller
     {
         private readonly ApplicationDbContext _db;
 
-        public ShopListController(ApplicationDbContext db)
+        public DashBoardController(ApplicationDbContext db)
         {
             _db = db;
         }

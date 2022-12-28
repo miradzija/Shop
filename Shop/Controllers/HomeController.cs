@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Data;
 using Shop.Models;
 using System.Diagnostics;
 
@@ -7,10 +8,13 @@ namespace Shop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
+            _db = db;
+
         }
 
         public IActionResult Index()
@@ -27,6 +31,25 @@ namespace Shop.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Shop()
+        {
+
+            IEnumerable<ShopList> itemList = _db.shopLists.ToList();
+            return View(itemList);
+
+        }
+
+        public IActionResult ShopSingle(int id)
+        {
+            var model = _db.shopLists.Find(id);
+            return View(model);
         }
     }
 }
